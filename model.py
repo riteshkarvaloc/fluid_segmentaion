@@ -58,14 +58,6 @@ def segment_and_write(input_file, jpeg_output_file):
 
     sitk.WriteImage(seg, jpeg_output_file)
     
-def b64_filewriter(filename, content):
-    string = content.encode('utf8')
-    b64_decode = base64.decodebytes(string)
-    fp = open(filename, "wb")
-    fp.write(b64_decode)
-    fp.close()
-    
-filename = 'temp.jpg'
 
 model_name = os.getenv('MODEL_NAME',None)
 
@@ -86,28 +78,31 @@ class KFServingSampleModel(kfserving.KFModel):
             json_data = inputs
         except ValueError:
             return json.dumps({ "error": "Recieved invalid json" })
-        
-        #data = json_data["signatures"]["inputs"][0][0]["data"]
+        # Content sent by client
         data1 = json_data["signatures"]["inputs"][0][0]["data1"]
         data2 = json_data["signatures"]["inputs"][0][0]["data2"]
         
-        
-        #b64_filewriter('images/original_sub_fourslice.mhd', data1)
+        # Writing files
         with open('images/original_sub_fourslice.mhd', 'w') as f:
             f.write(data1)
-        #b64_filewriter('images/original_sub_fourslice.raw', data2)
+
         with open('images/original_sub_fourslice.raw', 'wb') as f:
             f.write(data2.encode())
+
+        # Segmentation
         segment_and_write('images/original_sub_fourslice.mhd', 'images/original_sub_fourslice.jpeg')
         
+       # Resize Image
         img = cv2.imread('images/original_sub_fourslice.jpeg')
         resized = cv2.resize(img, (768, 256), interpolation = cv2.INTER_AREA)
         cv2.imwrite('images/original_sub_fourslice.jpeg', resized)
        
+       # Converting image to base64 string
         with open('images/original_sub_fourslice.jpeg', 'rb') as open_file:
             byte_content = open_file.read()
         base64_bytes = base64.b64encode(byte_content)
         base64_string = base64_bytes.decode('utf-8')
+
         return {"out_image":base64_string}
 
 if __name__ == "__main__":
