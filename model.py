@@ -3,11 +3,17 @@ from typing import List, Dict
 from PIL import Image
 import base64
 import io
-import os
 import logging
-import json
 import SimpleITK as sitk
 import numpy as np
+import requests, json
+import sys, os
+from enum import Enum
+
+class IsotropicStrategy(Enum):
+    IsotropicToMin = 1
+    IsotropicToMax = 2
+
 
 def resample_to_isotropic(image, strategy=IsotropicStrategy.IsotropicToMax):
     """ Resample to image to isotropic spacing
