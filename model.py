@@ -90,7 +90,10 @@ class KFServingSampleModel(kfserving.KFModel):
         data1 = json_data["signatures"]["inputs"][0][0]["data1"]
         data2 = json_data["signatures"]["inputs"][0][0]["data2"]
         
-        b64_filewriter('images/original_sub_fourslice.mhd', data1)
+        
+        #b64_filewriter('images/original_sub_fourslice.mhd', data1)
+        with open('images/original_sub_fourslice.mhd', 'w') as f:
+            f.write(data1)
         b64_filewriter('images/original_sub_fourslice.raw', data2)
         
         segment_and_write('images/original_sub_fourslice.mhd', 'images/original_sub_fourslice.jpeg')
