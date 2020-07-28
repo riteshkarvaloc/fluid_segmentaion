@@ -1,0 +1,15 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = False
+CompressedData = True
+CompressedDataSize = 7194873
+TransformMatrix = 1 0 0 0 1 0 0 0 1
+Offset = 0 0 0
+CenterOfRotation = 0 0 0
+AnatomicalOrientation = RAI
+ElementSpacing = 0.01171875 0.001953125 0.31578947368400001
+ITK_InputFilterName = MetaImageIO
+DimSize = 512 1024 19
+ElementType = MET_UCHAR
+ElementDataFile = original_sub.zraw
