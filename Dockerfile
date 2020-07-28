@@ -5,6 +5,8 @@ FROM python:3.7-slim
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 
+RUN apt-get update
+RUN apt-get install libgtk2.0-dev -y
 
 # Install production dependencies.
 COPY . .
