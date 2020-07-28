@@ -97,7 +97,7 @@ class KFServingSampleModel(kfserving.KFModel):
             f.write(data1)
         #b64_filewriter('images/original_sub_fourslice.raw', data2)
         with open('images/original_sub_fourslice.raw', 'wb') as f:
-            f.write(data2)
+            f.write(data2.encode())
         segment_and_write('images/original_sub_fourslice.mhd', 'images/original_sub_fourslice.jpeg')
         
         img = cv2.imread('images/original_sub_fourslice.jpeg')
