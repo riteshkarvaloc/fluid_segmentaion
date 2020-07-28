@@ -93,7 +93,7 @@ class KFServingSampleModel(kfserving.KFModel):
         resized = cv2.resize(img, (768, 256), interpolation = cv2.INTER_AREA)
         cv2.imwrite('images/original_sub_fourslice.jpeg', resized)
        
-        with open('images/original_sub_fourslice.jpeg, 'rb') as open_file:
+        with open('images/original_sub_fourslice.jpeg', 'rb') as open_file:
             byte_content = open_file.read()
         base64_bytes = base64.b64encode(byte_content)
         base64_string = base64_bytes.decode('utf-8')
