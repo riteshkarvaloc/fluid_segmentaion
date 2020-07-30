@@ -15,6 +15,12 @@ class IsotropicStrategy(Enum):
     IsotropicToMin = 1
     IsotropicToMax = 2
 
+def b64_filewriter(filename, content):
+    string = content.encode('utf8')
+    b64_decode = base64.decodebytes(string)
+    fp = open(filename, "wb")
+    fp.write(b64_decode)
+    fp.close()
 
 def resample_to_isotropic(image, strategy=IsotropicStrategy.IsotropicToMax):
     """ Resample to image to isotropic spacing
@@ -86,8 +92,9 @@ class KFServingSampleModel(kfserving.KFModel):
         with open('images/original_sub_fourslice.mhd', 'w') as f:
             f.write(data1)
 
-        with open('images/original_sub_fourslice.raw', 'wb') as f:
-           f.write(data2.encode())
+        b64_filewriter('images/original_sub_fourslice.raw',data2)
+        # with open('images/original_sub_fourslice.raw', 'wb') as f:
+        #    f.write(data2.encode())
         # with open('images/original_sub_fourslice.raw', 'w') as f:
         #     f.write(data2)
 
